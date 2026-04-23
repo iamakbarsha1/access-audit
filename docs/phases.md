@@ -7,7 +7,7 @@ Each phase gets its own: brainstorm → spec → plan → build cycle.
 | 1 | Project scaffolding + Auth + DB schema | Spec Done | Foundation — everything depends on this |
 | 2 | Scanner service (Puppeteer + axe-core + BullMQ) | Complete | Core product value — can't demo without it |
 | 3 | AI fix suggestions (Claude Haiku) | Complete | The differentiator — makes scanner output 10x more useful |
-| 4 | Agency dashboard (site mgmt, bulk scans, charts) | Not Started | Where users live day-to-day |
+| 4 | Agency dashboard (site mgmt, scan triggers, violations) | Complete | Where users live day-to-day |
 | 5 | Billing (Dodo Payments) | Not Started | Gate revenue — needed before launch but not before dev |
 | 6 | Client deliverables (PDF, badges, shared views) | Not Started | Agency selling tool — needed for launch |
 | 7 | White-label subdomain routing | Not Started | Agency tier feature |
