@@ -9,4 +9,10 @@ export const config = {
   jobTimeoutMs: parseInt(process.env.JOB_TIMEOUT_MS || "600000", 10),
   pageRetries: 2,
   pageRetryDelayMs: 1000,
+  // AI configuration
+  anthropicApiKey: process.env.ANTHROPIC_API_KEY,
+  aiModel: process.env.AI_MODEL || "claude-haiku-4-5-20251001",
+  aiMaxViolationsPerPrompt: parseInt(process.env.AI_MAX_VIOLATIONS_PER_PROMPT || "20", 10),
+  aiMaxRetries: parseInt(process.env.AI_MAX_RETRIES || "3", 10),
+  aiTimeoutMs: parseInt(process.env.AI_TIMEOUT_MS || "30000", 10),
 } as const;

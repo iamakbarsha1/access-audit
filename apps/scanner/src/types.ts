@@ -5,6 +5,15 @@ export interface ScanJob {
   maxPages: number;
 }
 
+export interface AiSuggestionsJob {
+  scanId: string;
+}
+
+export interface AiFixResult {
+  explanation: string;
+  fixes: string[];
+}
+
 export interface PageResult {
   url: string;
   status: "scanned" | "failed" | "skipped";
@@ -43,4 +52,14 @@ export type ProgressEvent =
       currentUrl: string;
     }
   | { event: "scan_complete"; scanId: string; complianceScore: number }
-  | { event: "scan_failed"; scanId: string; error: string };
+  | { event: "scan_failed"; scanId: string; error: string }
+  | { event: "ai_start"; scanId: string; totalGroups: number }
+  | {
+      event: "ai_progress";
+      scanId: string;
+      groupsProcessed: number;
+      totalGroups: number;
+      currentRule: string;
+    }
+  | { event: "ai_complete"; scanId: string }
+  | { event: "ai_failed"; scanId: string; error: string };
