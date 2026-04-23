@@ -8,7 +8,11 @@ export interface ScanJobData {
   maxPages: number;
 }
 
-export const scanQueue = new Queue<ScanJobData>("scan", {
+export interface AiSuggestionsJobData {
+  scanId: string;
+}
+
+export const scanQueue = new Queue<ScanJobData | AiSuggestionsJobData>("scan", {
   connection: redis,
   defaultJobOptions: {
     attempts: 2,
