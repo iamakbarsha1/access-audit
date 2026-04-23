@@ -1,7 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { baseProcedure } from "./init";
-import { member as memberTable } from "@access-audit/db/schema";
-import { eq, and } from "@access-audit/db";
+import {
+  member as memberTable,
+  organizationSettings,
+} from "@access-audit/db/schema";
+import { eq, and, isPaidPlan, isTrialExpired } from "@access-audit/db";
 
 const ROLE_HIERARCHY = {
   owner: 4,
@@ -10,7 +13,7 @@ const ROLE_HIERARCHY = {
   viewer: 1,
 } as const;
 
-type Role = keyof typeof ROLE_HIERARCHY;
+export type Role = keyof typeof ROLE_HIERARCHY;
 
 export const authedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   if (!ctx.session || !ctx.user) {
@@ -67,6 +70,34 @@ export function orgProcedure(minRole: Role = "viewer") {
         orgId,
         membership,
       },
+    });
+  });
+}
+
+export function paidProcedure(minRole: Role = "viewer") {
+  return orgProcedure(minRole).use(async ({ ctx, next }) => {
+    const settings = await ctx.db
+      .select()
+      .from(organizationSettings)
+      .where(eq(organizationSettings.organizationId, ctx.orgId));
+
+    const orgSettings = settings[0];
+    const plan = orgSettings?.plan ?? "trial";
+
+    // Paid plans always pass
+    if (isPaidPlan(plan)) {
+      return next({ ctx: { ...ctx, plan, orgSettings } });
+    }
+
+    // Trial plan — check if still valid
+    if (!isTrialExpired(orgSettings?.trialEndsAt ?? null)) {
+      return next({ ctx: { ...ctx, plan, orgSettings } });
+    }
+
+    // Trial expired, no paid plan → block
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Your trial has expired. Please upgrade to continue.",
     });
   });
 }
