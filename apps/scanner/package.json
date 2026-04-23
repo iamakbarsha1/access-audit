@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@access-audit/db": "workspace:*",
+    "@anthropic-ai/sdk": "^0.90.0",
     "@axe-core/puppeteer": "^4",
     "bullmq": "^5",
     "dotenv": "^16",
