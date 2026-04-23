@@ -5,6 +5,7 @@ import { membersRouter } from "./members";
 import { sitesRouter } from "./sites";
 import { scansRouter } from "./scans";
 import { violationsRouter } from "./violations";
+import { dashboardRouter } from "./dashboard";
 
 export const appRouter = createTRPCRouter({
   auth: authRouter,
@@ -13,6 +14,7 @@ export const appRouter = createTRPCRouter({
   sites: sitesRouter,
   scans: scansRouter,
   violations: violationsRouter,
+  dashboard: dashboardRouter,
 });
 
 export type AppRouter = typeof appRouter;
