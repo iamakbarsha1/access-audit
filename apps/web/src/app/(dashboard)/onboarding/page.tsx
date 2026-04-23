@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { trpc } from "@/trpc/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { StepBranding } from "@/components/onboarding/step-branding";
 import { StepAddSite } from "@/components/onboarding/step-add-site";
@@ -11,6 +12,11 @@ const steps = ["Branding", "Add Site", "Ready"];
 
 export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(0);
+  const initSettings = trpc.organization.initSettings.useMutation();
+
+  useEffect(() => {
+    initSettings.mutate();
+  }, []);
 
   return (
     <div className="mx-auto max-w-xl py-8">

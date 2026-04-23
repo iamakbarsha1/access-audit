@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import { createTRPCRouter } from "../init";
-import { orgProcedure } from "../middleware";
+import { authedProcedure, orgProcedure } from "../middleware";
 import {
   organization,
   organizationSettings,
@@ -43,6 +44,38 @@ export const organizationRouter = createTRPCRouter({
 
       return updated[0];
     }),
+
+  initSettings: authedProcedure.mutation(async ({ ctx }) => {
+    const orgId = ctx.session.session.activeOrganizationId;
+    if (!orgId) {
+      throw new TRPCError({
+        code: "BAD_REQUEST",
+        message: "No active organization",
+      });
+    }
+
+    // Check if settings already exist (idempotent)
+    const existing = await ctx.db
+      .select()
+      .from(organizationSettings)
+      .where(eq(organizationSettings.organizationId, orgId));
+
+    if (existing[0]) return existing[0];
+
+    // Create with trial defaults
+    const inserted = await ctx.db
+      .insert(organizationSettings)
+      .values({
+        organizationId: orgId,
+        plan: "trial",
+        trialEndsAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        siteQuota: 25,
+        scanQuota: 50,
+      })
+      .returning();
+
+    return inserted[0];
+  }),
 
   completeOnboarding: orgProcedure("owner").mutation(async ({ ctx }) => {
     const updated = await ctx.db
