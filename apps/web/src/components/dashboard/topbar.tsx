@@ -1,3 +1,4 @@
+// apps/web/src/components/dashboard/topbar.tsx
 "use client";
 
 import { usePathname } from "next/navigation";
@@ -17,7 +18,10 @@ const pageTitles: Record<string, string> = {
 export function Topbar() {
   const pathname = usePathname();
   const { data: activeOrg } = useActiveOrganization();
-  const title = pageTitles[pathname] ?? "Dashboard";
+
+  // Handle dynamic routes: /sites/[siteId] -> "Site Detail"
+  const isSiteDetail = /^\/sites\/[^/]+$/.test(pathname);
+  const title = isSiteDetail ? "Site Detail" : (pageTitles[pathname] ?? "Dashboard");
 
   return (
     <header className="flex h-16 items-center justify-between border-b bg-card px-6">
@@ -26,6 +30,17 @@ export function Topbar() {
           {activeOrg?.name}
         </span>
         <span className="text-muted-foreground">/</span>
+        {isSiteDetail && (
+          <>
+            <Link
+              href="/sites"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Sites
+            </Link>
+            <span className="text-muted-foreground">/</span>
+          </>
+        )}
         <h1 className="text-lg font-semibold">{title}</h1>
       </div>
       <div className="flex items-center gap-2">
