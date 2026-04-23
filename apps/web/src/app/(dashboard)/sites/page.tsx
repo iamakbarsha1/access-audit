@@ -1,6 +1,8 @@
+// apps/web/src/app/(dashboard)/sites/page.tsx
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { trpc } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,8 +24,23 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus, Globe, Trash2 } from "lucide-react";
+import { Plus, Globe, Trash2, ExternalLink, Clock } from "lucide-react";
 import { toast } from "sonner";
+import { ScanButton } from "@/components/dashboard/scan-button";
+
+function formatTimeAgo(date: Date | string | null): string {
+  if (!date) return "Never";
+  const now = new Date();
+  const then = new Date(date);
+  const diffMs = now.getTime() - then.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  const diffHours = Math.floor(diffMins / 60);
+  if (diffHours < 24) return `${diffHours}h ago`;
+  const diffDays = Math.floor(diffHours / 24);
+  return `${diffDays}d ago`;
+}
 
 export default function SitesPage() {
   const utils = trpc.useUtils();
@@ -126,23 +143,48 @@ export default function SitesPage() {
       ) : (
         <div className="grid gap-4">
           {activeSites.map((site) => (
-            <Card key={site.id}>
+            <Card key={site.id} className="transition-colors hover:bg-muted/30">
               <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <div>
+                <Link href={`/sites/${site.id}`} className="flex-1 min-w-0">
                   <CardTitle className="text-base">{site.name}</CardTitle>
-                  <CardDescription>{site.url}</CardDescription>
-                </div>
+                  <CardDescription className="flex items-center gap-2">
+                    {site.url}
+                    <ExternalLink className="h-3 w-3" />
+                  </CardDescription>
+                </Link>
                 <div className="flex items-center gap-2">
-                  <Badge variant={site.status === "active" ? "default" : "secondary"}>
-                    {site.status}
-                  </Badge>
-                  {site.complianceScore !== null && (
-                    <Badge variant="outline">{site.complianceScore}%</Badge>
+                  {site.lastScanAt && (
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <Clock className="h-3 w-3" />
+                      {formatTimeAgo(site.lastScanAt)}
+                    </span>
                   )}
+                  {site.complianceScore !== null ? (
+                    <Badge
+                      variant={
+                        site.complianceScore >= 80
+                          ? "default"
+                          : site.complianceScore >= 50
+                            ? "secondary"
+                            : "destructive"
+                      }
+                    >
+                      {site.complianceScore}%
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline">Not scanned</Badge>
+                  )}
+                  <ScanButton
+                    siteId={site.id}
+                    onScanComplete={() => utils.sites.list.invalidate()}
+                  />
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => deleteSite.mutate({ id: site.id })}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      deleteSite.mutate({ id: site.id });
+                    }}
                   >
                     <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
