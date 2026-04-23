@@ -1,0 +1,27 @@
+{
+  "name": "@access-audit/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./schema": "./src/schema/index.ts"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10",
+    "drizzle-orm": "^0.38"
+  },
+  "devDependencies": {
+    "@access-audit/tsconfig": "workspace:*",
+    "drizzle-kit": "^0.30",
+    "dotenv": "^16",
+    "typescript": "^5"
+  }
+}
