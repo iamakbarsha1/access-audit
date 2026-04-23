@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
+import { BillingTab } from "@/components/billing/billing-tab";
 
 export default function SettingsPage() {
   const orgQuery = trpc.organization.getOrg.useQuery();
@@ -109,14 +110,7 @@ export default function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="billing" className="pt-4">
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-12">
-              <p className="text-lg font-medium">Billing coming soon</p>
-              <p className="text-sm text-muted-foreground">
-                Powered by Dodo Payments. Available in Phase 5.
-              </p>
-            </CardContent>
-          </Card>
+          <BillingTab />
         </TabsContent>
       </Tabs>
     </div>
