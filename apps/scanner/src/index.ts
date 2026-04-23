@@ -12,7 +12,7 @@ async function main(): Promise<void> {
 
   // Start BullMQ worker
   const worker = createWorker();
-  console.log("[scanner] Worker listening on 'scan' queue");
+  console.log("[scanner] Worker listening on 'scan' queue (scan + ai-suggestions jobs)");
 
   // Graceful shutdown
   const shutdown = async () => {
