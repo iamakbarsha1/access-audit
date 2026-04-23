@@ -5,12 +5,22 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "tsx src/index.ts",
+    "build": "tsc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@access-audit/db": "workspace:*",
+    "@axe-core/puppeteer": "^4",
+    "bullmq": "^5",
+    "dotenv": "^16",
+    "fastify": "^5",
+    "ioredis": "^5",
+    "p-limit": "^6",
+    "puppeteer": "^24"
+  },
   "devDependencies": {
     "@access-audit/tsconfig": "workspace:*",
+    "@types/node": "^22",
     "tsx": "^4",
     "typescript": "^5"
   }
