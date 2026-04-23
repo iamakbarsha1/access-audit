@@ -1,11 +1,10 @@
 import { createTRPCRouter } from "../init";
 import { orgProcedure } from "../middleware";
 import { sites, scans, violations } from "@access-audit/db/schema";
-import { eq, and, sql, count } from "@access-audit/db";
+import { eq, and, sql, count, inArray } from "@access-audit/db";
 
 export const dashboardRouter = createTRPCRouter({
   stats: orgProcedure("viewer").query(async ({ ctx }) => {
-    // Get all active sites for this org
     const orgSites = await ctx.db
       .select({
         id: sites.id,
@@ -21,7 +20,6 @@ export const dashboardRouter = createTRPCRouter({
 
     const totalSites = orgSites.length;
 
-    // Calculate average compliance score (only sites that have been scanned)
     const scannedSites = orgSites.filter((s) => s.complianceScore !== null);
     const avgComplianceScore =
       scannedSites.length > 0
@@ -42,19 +40,29 @@ export const dashboardRouter = createTRPCRouter({
 
     const siteIds = orgSites.map((s) => s.id);
 
-    // Get the latest completed scan for each site to count current violations
-    const latestScans = await ctx.db
-      .select({ id: scans.id })
+    // Get completed scans with siteId, ordered newest first
+    const completedScans = await ctx.db
+      .select({ id: scans.id, siteId: scans.siteId })
       .from(scans)
       .where(
         and(
-          sql`${scans.siteId} IN ${siteIds}`,
+          inArray(scans.siteId, siteIds),
           eq(scans.status, "completed")
         )
       )
       .orderBy(sql`${scans.createdAt} DESC`);
 
-    if (latestScans.length === 0) {
+    // Deduplicate: keep only the latest scan per site
+    const seenSites = new Set<string>();
+    const latestScanIds: string[] = [];
+    for (const scan of completedScans) {
+      if (!seenSites.has(scan.siteId)) {
+        seenSites.add(scan.siteId);
+        latestScanIds.push(scan.id);
+      }
+    }
+
+    if (latestScanIds.length === 0) {
       return {
         totalSites,
         avgComplianceScore,
@@ -63,20 +71,18 @@ export const dashboardRouter = createTRPCRouter({
       };
     }
 
-    const scanIds = latestScans.map((s) => s.id);
-
-    // Count open violations across latest scans
+    // Count open violations across latest scans only
     const violationCounts = await ctx.db
       .select({
         total: count(),
         critical: count(
-          sql`CASE WHEN ${violations.impact} = 'critical' AND ${violations.status} = 'open' THEN 1 END`
+          sql`CASE WHEN ${violations.impact} = 'critical' THEN 1 END`
         ),
       })
       .from(violations)
       .where(
         and(
-          sql`${violations.scanId} IN ${scanIds}`,
+          inArray(violations.scanId, latestScanIds),
           eq(violations.status, "open")
         )
       );

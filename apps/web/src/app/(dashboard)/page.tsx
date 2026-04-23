@@ -28,7 +28,7 @@ export default function DashboardHomePage() {
       // Never scanned first, then lowest score
       if (a.complianceScore === null && b.complianceScore === null) return 0;
       if (a.complianceScore === null) return -1;
-      if (b.complianceScore === null) return -1;
+      if (b.complianceScore === null) return 1;
       return a.complianceScore - b.complianceScore;
     })
     .slice(0, 5);
