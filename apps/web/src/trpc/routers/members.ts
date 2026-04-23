@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter } from "../init";
-import { orgProcedure } from "../middleware";
+import { orgProcedure, paidProcedure } from "../middleware";
 import { member, invitation, user } from "@access-audit/db/schema";
-import { eq, and } from "@access-audit/db";
+import { eq, and, count, getPlan } from "@access-audit/db";
 import { auth } from "@/lib/auth";
 
 export const membersRouter = createTRPCRouter({
@@ -35,7 +35,7 @@ export const membersRouter = createTRPCRouter({
     return { members, invitations };
   }),
 
-  invite: orgProcedure("admin")
+  invite: paidProcedure("admin")
     .input(
       z.object({
         email: z.string().email(),
@@ -43,6 +43,20 @@ export const membersRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // Check team member quota
+      const planConfig = getPlan(ctx.plan);
+      const [memberCount] = await ctx.db
+        .select({ count: count() })
+        .from(member)
+        .where(eq(member.organizationId, ctx.orgId));
+
+      if ((memberCount?.count ?? 0) >= planConfig.teamMembers) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: `Team member limit reached (${planConfig.teamMembers}). Upgrade your plan for more members.`,
+        });
+      }
+
       const result = await auth.api.createInvitation({
         headers: new Headers(),
         body: {

@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter } from "../init";
-import { orgProcedure } from "../middleware";
+import { orgProcedure, paidProcedure } from "../middleware";
 import { scans, sites } from "@access-audit/db/schema";
 import { eq, and, desc } from "@access-audit/db";
 import { scanQueue } from "@/lib/scan-queue";
 
 export const scansRouter = createTRPCRouter({
-  startScan: orgProcedure("member")
+  startScan: paidProcedure("member")
     .input(
       z.object({
         siteId: z.string().uuid(),

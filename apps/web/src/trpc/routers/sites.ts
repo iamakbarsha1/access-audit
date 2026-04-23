@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter } from "../init";
-import { orgProcedure } from "../middleware";
-import { sites, organizationSettings } from "@access-audit/db/schema";
-import { eq, and, count } from "@access-audit/db";
+import { orgProcedure, paidProcedure } from "../middleware";
+import { sites } from "@access-audit/db/schema";
+import { eq, and, count, getPlan } from "@access-audit/db";
 
 export const sitesRouter = createTRPCRouter({
   list: orgProcedure("viewer").query(async ({ ctx }) => {
@@ -16,7 +16,7 @@ export const sitesRouter = createTRPCRouter({
     return result;
   }),
 
-  add: orgProcedure("member")
+  add: paidProcedure("member")
     .input(
       z.object({
         url: z.string().url("Must be a valid URL"),
@@ -27,29 +27,28 @@ export const sitesRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      // Check site quota
-      const settings = await ctx.db
-        .select()
-        .from(organizationSettings)
-        .where(eq(organizationSettings.organizationId, ctx.orgId));
+      // Quota from plans config (paidProcedure puts plan in ctx)
+      const planConfig = getPlan(ctx.plan);
+      const quota = planConfig.siteQuota;
 
-      const quota = settings[0]?.siteQuota ?? 25;
+      // Unlimited check (-1 means unlimited)
+      if (quota !== -1) {
+        const [siteCount] = await ctx.db
+          .select({ count: count() })
+          .from(sites)
+          .where(
+            and(
+              eq(sites.organizationId, ctx.orgId),
+              eq(sites.status, "active")
+            )
+          );
 
-      const [siteCount] = await ctx.db
-        .select({ count: count() })
-        .from(sites)
-        .where(
-          and(
-            eq(sites.organizationId, ctx.orgId),
-            eq(sites.status, "active")
-          )
-        );
-
-      if ((siteCount?.count ?? 0) >= quota) {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: `Site limit reached (${quota}). Upgrade your plan for more sites.`,
-        });
+        if ((siteCount?.count ?? 0) >= quota) {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+            message: `Site limit reached (${quota}). Upgrade your plan for more sites.`,
+          });
+        }
       }
 
       // Check for duplicate URL in org
