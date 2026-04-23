@@ -1,0 +1,25 @@
+# AccessAudit - Build Phases
+
+Each phase gets its own: brainstorm → spec → plan → build cycle.
+
+| Phase | Subsystem | Status | Why This Order |
+|-------|-----------|--------|----------------|
+| 1 | Project scaffolding + Auth + DB schema | Spec Done | Foundation — everything depends on this |
+| 2 | Scanner service (Puppeteer + axe-core + BullMQ) | Not Started | Core product value — can't demo without it |
+| 3 | AI fix suggestions (Claude Haiku) | Not Started | The differentiator — makes scanner output 10x more useful |
+| 4 | Agency dashboard (site mgmt, bulk scans, charts) | Not Started | Where users live day-to-day |
+| 5 | Billing (Dodo Payments) | Not Started | Gate revenue — needed before launch but not before dev |
+| 6 | Client deliverables (PDF, badges, shared views) | Not Started | Agency selling tool — needed for launch |
+| 7 | White-label subdomain routing | Not Started | Agency tier feature |
+| 8 | Landing page + launch prep | Not Started | Last — ship when product works |
+
+## Phase Dependencies
+```
+Phase 1 (foundation) ──→ Phase 2 (scanner) ──→ Phase 3 (AI layer)
+                    ──→ Phase 4 (dashboard) ──→ Phase 5 (billing)
+                                            ──→ Phase 6 (deliverables)
+                                            ──→ Phase 7 (white-label)
+                                                        ──→ Phase 8 (launch)
+```
+
+Phase 4-7 can partially parallelize once Phase 2-3 are done.
