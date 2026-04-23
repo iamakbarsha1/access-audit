@@ -20,6 +20,8 @@ export const sites = pgTable(
     scanFrequency: text("scanFrequency").notNull().default("daily"),
     complianceScore: integer("complianceScore"),
     status: text("status").notNull().default("active"),
+    lastScanAt: timestamp("lastScanAt"),
+    nextScanAt: timestamp("nextScanAt"),
     createdAt: timestamp("createdAt").notNull().defaultNow(),
     updatedAt: timestamp("updatedAt").notNull().defaultNow(),
   },
