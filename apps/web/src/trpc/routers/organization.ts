@@ -77,6 +77,21 @@ export const organizationRouter = createTRPCRouter({
     return inserted[0];
   }),
 
+  linkDodoCustomer: orgProcedure("owner")
+    .input(z.object({ dodoCustomerId: z.string().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      const updated = await ctx.db
+        .update(organizationSettings)
+        .set({
+          dodoCustomerId: input.dodoCustomerId,
+          updatedAt: new Date(),
+        })
+        .where(eq(organizationSettings.organizationId, ctx.orgId))
+        .returning();
+
+      return updated[0];
+    }),
+
   completeOnboarding: orgProcedure("owner").mutation(async ({ ctx }) => {
     const updated = await ctx.db
       .update(organizationSettings)
