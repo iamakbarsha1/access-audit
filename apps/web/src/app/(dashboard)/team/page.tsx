@@ -54,7 +54,7 @@ export default function TeamPage() {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
-  const [inviteRole, setInviteRole] = useState<"admin" | "member" | "viewer">("member");
+  const [inviteRole, setInviteRole] = useState<"admin" | "member">("member");
 
   return (
     <div className="space-y-6">
@@ -108,7 +108,6 @@ export default function TeamPage() {
                   <SelectContent>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="member">Member</SelectItem>
-                    <SelectItem value="viewer">Viewer</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

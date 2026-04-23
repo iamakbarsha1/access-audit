@@ -1,0 +1,17 @@
+{
+  "name": "@access-audit/scanner",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@access-audit/tsconfig": "workspace:*",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}
