@@ -34,6 +34,7 @@
     "clsx": "^2",
     "dodopayments": "^2.28.2",
     "ioredis": "^5",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.469",
     "next": "^15",
     "next-themes": "^0.4.6",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@access-audit/tsconfig": "workspace:*",
     "@tailwindcss/forms": "^0.5",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
