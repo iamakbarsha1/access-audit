@@ -10,6 +10,7 @@ import { StatCard } from "@/components/dashboard/stat-card";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { ScanHistoryTable } from "@/components/dashboard/scan-history";
 import { ViolationList } from "@/components/dashboard/violation-list";
+import { DeliverablesTab } from "@/components/dashboard/deliverables-tab";
 import {
   ShieldCheck,
   AlertOctagon,
@@ -94,6 +95,7 @@ export default function SiteDetailPage() {
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="scans">Scans</TabsTrigger>
           <TabsTrigger value="violations">Violations</TabsTrigger>
+          <TabsTrigger value="deliverables">Deliverables</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -175,6 +177,11 @@ export default function SiteDetailPage() {
               No completed scans yet. Run a scan to see violations.
             </p>
           )}
+        </TabsContent>
+
+        {/* Deliverables Tab */}
+        <TabsContent value="deliverables">
+          <DeliverablesTab siteId={siteId} scans={allScans} />
         </TabsContent>
       </Tabs>
     </div>
