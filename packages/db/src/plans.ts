@@ -6,6 +6,7 @@ export interface PlanFeatures {
   pdfReports: "basic" | "branded" | "branded_vpat";
   clientDashboard: boolean;
   complianceBadge: boolean;
+  shareLinks: boolean;
   apiAccess: boolean;
   whiteLabel: boolean;
 }
@@ -37,6 +38,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
       pdfReports: "branded",
       clientDashboard: true,
       complianceBadge: true,
+      shareLinks: true,
       apiAccess: false,
       whiteLabel: false,
     },
@@ -55,6 +57,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
       pdfReports: "basic",
       clientDashboard: false,
       complianceBadge: false,
+      shareLinks: false,
       apiAccess: false,
       whiteLabel: false,
     },
@@ -73,6 +76,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
       pdfReports: "branded",
       clientDashboard: true,
       complianceBadge: true,
+      shareLinks: true,
       apiAccess: false,
       whiteLabel: false,
     },
@@ -91,6 +95,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
       pdfReports: "branded_vpat",
       clientDashboard: true,
       complianceBadge: true,
+      shareLinks: true,
       apiAccess: true,
       whiteLabel: true,
     },
@@ -109,4 +114,22 @@ export function isTrialExpired(trialEndsAt: Date | null): boolean {
 
 export function isPaidPlan(key: string): boolean {
   return key === "starter" || key === "agency" || key === "pro";
+}
+
+export function canGenerateVpat(plan: string): boolean {
+  const config = getPlan(plan);
+  return config.features.pdfReports === "branded_vpat";
+}
+
+export function canUseBadge(plan: string): boolean {
+  return getPlan(plan).features.complianceBadge;
+}
+
+export function canShareLinks(plan: string): boolean {
+  return getPlan(plan).features.shareLinks;
+}
+
+export function isBrandedReport(plan: string): boolean {
+  const reports = getPlan(plan).features.pdfReports;
+  return reports === "branded" || reports === "branded_vpat";
 }
