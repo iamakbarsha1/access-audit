@@ -7,6 +7,9 @@ const publicPaths = [
   "/verify-email",
   "/api/auth",
   "/invite",
+  "/pricing",
+  "/share",
+  "/api/badge",
 ];
 
 function isPublicPath(pathname: string): boolean {
