@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./client": "./src/client.ts",
-    "./schema": "./src/schema/index.ts"
+    "./schema": "./src/schema/index.ts",
+    "./data/wcag-criteria": "./src/data/wcag-criteria.ts"
   },
   "scripts": {
     "db:generate": "drizzle-kit generate",
