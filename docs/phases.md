@@ -9,7 +9,7 @@ Each phase gets its own: brainstorm → spec → plan → build cycle.
 | 3 | AI fix suggestions (Claude Haiku) | Complete | The differentiator — makes scanner output 10x more useful |
 | 4 | Agency dashboard (site mgmt, scan triggers, violations) | Complete | Where users live day-to-day |
 | 5 | Billing (Dodo Payments — checkout, webhooks, plan enforcement) | Complete | Gate revenue — needed before launch but not before dev |
-| 6 | Client deliverables (PDF, badges, shared views) | Not Started | Agency selling tool — needed for launch |
+| 6 | Client deliverables (PDF reports, badges, shared views, VPAT) | Complete | Agency selling tool — needed for launch |
 | 7 | White-label subdomain routing | Not Started | Agency tier feature |
 | 8 | Landing page + launch prep | Not Started | Last — ship when product works |
 
