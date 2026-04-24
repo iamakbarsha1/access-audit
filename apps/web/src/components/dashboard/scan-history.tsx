@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { FileDown } from "lucide-react";
 
 interface Scan {
   id: string;
@@ -43,6 +44,24 @@ const statusVariant: Record<string, "default" | "secondary" | "destructive" | "o
 };
 
 export function ScanHistoryTable({ scans, onSelectScan }: ScanHistoryTableProps) {
+  async function handleDownloadPdf(scanId: string) {
+    const res = await fetch("/api/reports/generate-pdf", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ scanId }),
+    });
+
+    if (!res.ok) return;
+
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `compliance-report-${scanId.slice(0, 8)}.pdf`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   if (scans.length === 0) {
     return (
       <p className="py-8 text-center text-sm text-muted-foreground">
@@ -61,6 +80,7 @@ export function ScanHistoryTable({ scans, onSelectScan }: ScanHistoryTableProps)
             <th className="pb-2 font-medium">Pages</th>
             <th className="pb-2 font-medium">Score</th>
             <th className="pb-2 font-medium">Duration</th>
+            <th className="pb-2 font-medium">Report</th>
           </tr>
         </thead>
         <tbody>
@@ -81,6 +101,20 @@ export function ScanHistoryTable({ scans, onSelectScan }: ScanHistoryTableProps)
                 {scan.complianceScore !== null ? `${scan.complianceScore}%` : "—"}
               </td>
               <td className="py-2">{formatDuration(scan.durationMs)}</td>
+              <td className="py-2">
+                {scan.status === "completed" && (
+                  <button
+                    className="inline-flex items-center rounded p-1 hover:bg-muted"
+                    title="Download PDF Report"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDownloadPdf(scan.id);
+                    }}
+                  >
+                    <FileDown className="h-4 w-4 text-muted-foreground" />
+                  </button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
