@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { trpc } from "@/trpc/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,7 +51,7 @@ export default function VpatReviewPage() {
 
   const debouncedUpdateEntry = useCallback(
     debounce(
-      (entryId: string, data: { conformanceLevel?: string; remarks?: string }) => {
+      (entryId: string, data: { conformanceLevel?: "supports" | "partially_supports" | "does_not_support" | "not_applicable" | "not_evaluated"; remarks?: string }) => {
         updateEntry.mutate({ entryId, ...data });
       },
       500
@@ -188,7 +188,7 @@ export default function VpatReviewPage() {
             <label className="text-sm font-medium">Product Description</label>
             <Textarea
               defaultValue={metadata.productDescription ?? ""}
-              onChange={(e) =>
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                 debouncedUpdateMetadata({
                   ...metadata,
                   productDescription: e.target.value,
@@ -248,7 +248,7 @@ export default function VpatReviewPage() {
               <Select
                 defaultValue={entry.conformanceLevel}
                 onValueChange={(v) =>
-                  debouncedUpdateEntry(entry.id, { conformanceLevel: v })
+                  debouncedUpdateEntry(entry.id, { conformanceLevel: v as "supports" | "partially_supports" | "does_not_support" | "not_applicable" | "not_evaluated" })
                 }
               >
                 <SelectTrigger>
@@ -266,7 +266,7 @@ export default function VpatReviewPage() {
                 placeholder="Remarks..."
                 defaultValue={entry.remarks ?? ""}
                 className="min-h-[60px]"
-                onChange={(e) =>
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                   debouncedUpdateEntry(entry.id, { remarks: e.target.value })
                 }
               />

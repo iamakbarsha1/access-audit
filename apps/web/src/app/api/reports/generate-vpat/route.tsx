@@ -76,7 +76,7 @@ export async function POST(request: NextRequest) {
     <VpatReport data={reportData} />
   );
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="vpat-${report[0].id.slice(0, 8)}.pdf"`,
