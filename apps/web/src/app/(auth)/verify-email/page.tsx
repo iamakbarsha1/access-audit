@@ -39,6 +39,7 @@ export default function VerifyEmailPage() {
     }
     const { error } = await authClient.sendVerificationEmail({
       email,
+      callbackURL: "/onboarding",
     });
     if (error) {
       toast.error("Failed to resend verification email");

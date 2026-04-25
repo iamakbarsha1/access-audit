@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signUp } from "@/lib/auth-client";
+import { signUp, authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -45,6 +45,12 @@ export default function SignupPage() {
     // 2. Store org name and email for use after email verification
     localStorage.setItem("pendingOrgName", orgName);
     localStorage.setItem("pendingEmail", email);
+
+    // 3. Explicitly send verification email (handles both new and existing unverified users)
+    await authClient.sendVerificationEmail({
+      email,
+      callbackURL: "/onboarding",
+    });
 
     setLoading(false);
     router.push("/verify-email");
