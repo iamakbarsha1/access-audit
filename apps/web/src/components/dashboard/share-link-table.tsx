@@ -17,9 +17,11 @@ interface ShareLinkTableProps {
   siteId: string;
   canAccess: boolean;
   scans: Array<{ id: string; createdAt: Date | string; complianceScore: number | null }>;
+  orgSlug?: string | null;
+  hasWhiteLabel?: boolean;
 }
 
-export function ShareLinkTable({ siteId, canAccess, scans }: ShareLinkTableProps) {
+export function ShareLinkTable({ siteId, canAccess, scans, orgSlug, hasWhiteLabel }: ShareLinkTableProps) {
   const [copied, setCopied] = useState<string | null>(null);
   const [selectedScanId, setSelectedScanId] = useState<string>("");
   const [expiresIn, setExpiresIn] = useState<"7d" | "30d" | "90d" | "never">("30d");
@@ -60,7 +62,15 @@ export function ShareLinkTable({ siteId, canAccess, scans }: ShareLinkTableProps
   const completedScans = scans.filter((s) => s.complianceScore !== null);
 
   function handleCopy(token: string) {
-    const url = `${window.location.origin}/share/${token}`;
+    let url: string;
+    if (hasWhiteLabel && orgSlug) {
+      // Use white-label subdomain URL
+      const baseDomain = window.location.hostname.split(".").slice(-2).join(".");
+      const protocol = window.location.protocol;
+      url = `${protocol}//${orgSlug}.${baseDomain}/r/${token}`;
+    } else {
+      url = `${window.location.origin}/share/${token}`;
+    }
     navigator.clipboard.writeText(url);
     setCopied(token);
     setTimeout(() => setCopied(null), 2000);

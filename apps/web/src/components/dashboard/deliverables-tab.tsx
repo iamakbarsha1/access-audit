@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileDown, FileText } from "lucide-react";
 import { BadgeEmbed } from "./badge-embed";
 import { ShareLinkTable } from "./share-link-table";
+import { canUseWhiteLabel } from "@access-audit/db";
 
 interface DeliverablesTabProps {
   siteId: string;
@@ -116,7 +117,13 @@ export function DeliverablesTab({ siteId, scans }: DeliverablesTabProps) {
       <BadgeEmbed siteId={siteId} canAccess={canUseBadge} />
 
       {/* Share Links */}
-      <ShareLinkTable siteId={siteId} canAccess={canShareLinks} scans={completedScans} />
+      <ShareLinkTable
+        siteId={siteId}
+        canAccess={canShareLinks}
+        scans={completedScans}
+        orgSlug={orgQuery.data?.organization?.slug}
+        hasWhiteLabel={canUseWhiteLabel(plan)}
+      />
     </div>
   );
 }
