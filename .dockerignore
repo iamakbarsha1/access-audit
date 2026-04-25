@@ -1,0 +1,9 @@
+node_modules
+.git
+.next
+dist
+apps/web
+*.md
+.env*
+.turbo
+.vercel
