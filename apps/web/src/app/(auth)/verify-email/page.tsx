@@ -2,7 +2,7 @@
 
 import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -17,16 +17,28 @@ import { toast } from "sonner";
 export default function VerifyEmailPage() {
   const { data: session } = useSession();
   const router = useRouter();
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const sessionEmail = session?.user?.email;
+    const storedEmail = localStorage.getItem("pendingEmail");
+    setEmail(sessionEmail || storedEmail || "");
+  }, [session]);
 
   useEffect(() => {
     if (session?.user?.emailVerified) {
+      localStorage.removeItem("pendingEmail");
       router.push("/onboarding");
     }
   }, [session, router]);
 
   async function handleResend() {
+    if (!email) {
+      toast.error("No email address found. Please sign up again.");
+      return;
+    }
     const { error } = await authClient.sendVerificationEmail({
-      email: session?.user?.email ?? "",
+      email,
     });
     if (error) {
       toast.error("Failed to resend verification email");
@@ -56,7 +68,7 @@ export default function VerifyEmailPage() {
         <CardTitle>Check your email</CardTitle>
         <CardDescription>
           We sent a verification link to{" "}
-          <strong>{session?.user?.email ?? "your email"}</strong>
+          <strong>{email || "your email"}</strong>
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">

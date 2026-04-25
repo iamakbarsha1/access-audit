@@ -42,8 +42,9 @@ export default function SignupPage() {
       return;
     }
 
-    // 2. Store org name for creation after email verification
+    // 2. Store org name and email for use after email verification
     localStorage.setItem("pendingOrgName", orgName);
+    localStorage.setItem("pendingEmail", email);
 
     setLoading(false);
     router.push("/verify-email");
