@@ -17,7 +17,11 @@
         "GOOGLE_CLIENT_SECRET",
         "BLOB_READ_WRITE_TOKEN",
         "DODO_PAYMENTS_API_KEY",
-        "DODO_PAYMENTS_WEBHOOK_KEY"
+        "DODO_PAYMENTS_WEBHOOK_KEY",
+        "DODO_PAYMENTS_ENVIRONMENT",
+        "DODO_PRODUCT_STARTER",
+        "DODO_PRODUCT_AGENCY",
+        "DODO_PRODUCT_PRO"
       ]
     },
     "dev": {
