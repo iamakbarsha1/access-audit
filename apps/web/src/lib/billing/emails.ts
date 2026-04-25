@@ -4,7 +4,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const FROM = "AccessAudit <noreply@accessaudit.com>";
+const FROM = "AccessAudit <onboarding@resend.dev>";
 
 async function sendEmail(to: string, subject: string, html: string) {
   if (!resend) {

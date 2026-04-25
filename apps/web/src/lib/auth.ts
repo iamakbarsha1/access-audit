@@ -54,7 +54,7 @@ export const auth = betterAuth({
         return;
       }
       await resend.emails.send({
-        from: "AccessAudit <noreply@accessaudit.com>",
+        from: "AccessAudit <onboarding@resend.dev>",
         to: user.email,
         subject: "Verify your AccessAudit account",
         html: `
@@ -79,7 +79,7 @@ export const auth = betterAuth({
           return;
         }
         await resend.emails.send({
-          from: "AccessAudit <noreply@accessaudit.com>",
+          from: "AccessAudit <onboarding@resend.dev>",
           to: data.email,
           subject: `${data.inviter.user.name} invited you to ${data.organization.name} on AccessAudit`,
           html: `
