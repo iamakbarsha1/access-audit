@@ -11,6 +11,8 @@ const publicPaths = [
   "/share",
   "/api/badge",
   "/api/wl",
+  "/api/track",
+  "/api/cron/analytics",
 ];
 
 function isPublicPath(pathname: string): boolean {
