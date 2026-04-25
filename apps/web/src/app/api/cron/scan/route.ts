@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { db, eq, and, sql } from "@access-audit/db";
 import { sites, scans } from "@access-audit/db/schema";
-import { scanQueue } from "@/lib/scan-queue";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   // Verify cron secret
@@ -9,6 +10,8 @@ export async function GET(request: Request) {
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const { scanQueue } = await import("@/lib/scan-queue");
 
   const now = new Date();
 

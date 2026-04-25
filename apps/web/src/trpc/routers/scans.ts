@@ -4,7 +4,7 @@ import { createTRPCRouter } from "../init";
 import { orgProcedure, paidProcedure } from "../middleware";
 import { scans, sites } from "@access-audit/db/schema";
 import { eq, and, desc } from "@access-audit/db";
-import { scanQueue } from "@/lib/scan-queue";
+import type { ScanJobData } from "@/lib/scan-queue";
 
 export const scansRouter = createTRPCRouter({
   startScan: paidProcedure("member")
@@ -42,7 +42,8 @@ export const scansRouter = createTRPCRouter({
 
       const scan = inserted[0]!;
 
-      // Dispatch job to scanner queue
+      // Dispatch job to scanner queue (dynamic import to avoid Redis at build time)
+      const { scanQueue } = await import("@/lib/scan-queue");
       await scanQueue.add(
         "scan",
         {
