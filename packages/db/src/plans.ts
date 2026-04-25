@@ -78,7 +78,7 @@ export const PLANS: Record<PlanKey, PlanConfig> = {
       complianceBadge: true,
       shareLinks: true,
       apiAccess: false,
-      whiteLabel: false,
+      whiteLabel: true,
     },
   },
   pro: {
@@ -132,4 +132,8 @@ export function canShareLinks(plan: string): boolean {
 export function isBrandedReport(plan: string): boolean {
   const reports = getPlan(plan).features.pdfReports;
   return reports === "branded" || reports === "branded_vpat";
+}
+
+export function canUseWhiteLabel(plan: string): boolean {
+  return getPlan(plan).features.whiteLabel;
 }
