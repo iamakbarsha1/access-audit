@@ -16,12 +16,15 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const dodoClient = new DodoPayments({
-  bearerToken: process.env.DODO_PAYMENTS_API_KEY!,
-  environment:
-    (process.env.DODO_PAYMENTS_ENVIRONMENT as "test_mode" | "live_mode") ??
-    "test_mode",
-});
+const dodoClient = process.env.DODO_PAYMENTS_API_KEY
+  ? new DodoPayments({
+      bearerToken: process.env.DODO_PAYMENTS_API_KEY,
+      environment:
+        (process.env.DODO_PAYMENTS_ENVIRONMENT as
+          | "test_mode"
+          | "live_mode") ?? "test_mode",
+    })
+  : (null as unknown as DodoPayments);
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
