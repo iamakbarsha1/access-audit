@@ -9,6 +9,6 @@ export const redis = new Proxy({} as Redis, {
       if (!url) throw new Error("UPSTASH_REDIS_URL is not set");
       _redis = new Redis(url, { maxRetriesPerRequest: null });
     }
-    return (_redis as Record<string | symbol, unknown>)[prop];
+    return (_redis as unknown as Record<string | symbol, unknown>)[prop];
   },
 });
