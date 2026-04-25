@@ -93,6 +93,45 @@ const STATS = [
 export default function HomePage() {
   return (
     <div>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "AccessAudit",
+            applicationCategory: "BusinessApplication",
+            operatingSystem: "Web",
+            description:
+              "Scan websites for WCAG violations, get AI-powered fix suggestions, and deliver branded compliance reports.",
+            offers: [
+              {
+                "@type": "Offer",
+                name: "Starter",
+                price: "49",
+                priceCurrency: "USD",
+                priceValidUntil: "2027-12-31",
+              },
+              {
+                "@type": "Offer",
+                name: "Agency",
+                price: "199",
+                priceCurrency: "USD",
+                priceValidUntil: "2027-12-31",
+              },
+              {
+                "@type": "Offer",
+                name: "Pro",
+                price: "499",
+                priceCurrency: "USD",
+                priceValidUntil: "2027-12-31",
+              },
+            ],
+          }),
+        }}
+      />
+
       {/* ===== HERO ===== */}
       <section className="relative overflow-hidden">
         {/* Background gradient */}
