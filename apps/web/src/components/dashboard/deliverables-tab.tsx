@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileDown, FileText } from "lucide-react";
 import { BadgeEmbed } from "./badge-embed";
 import { ShareLinkTable } from "./share-link-table";
-import { canUseWhiteLabel } from "@access-audit/db";
+import { canUseWhiteLabel } from "@access-audit/db/plans";
 
 interface DeliverablesTabProps {
   siteId: string;

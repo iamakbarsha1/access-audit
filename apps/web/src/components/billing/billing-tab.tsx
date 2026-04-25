@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/trpc/client";
-import { getPlan, isPaidPlan, isTrialExpired } from "@access-audit/db";
+import { getPlan, isPaidPlan, isTrialExpired } from "@access-audit/db/plans";
 import { ExternalLink } from "lucide-react";
 
 export function BillingTab() {

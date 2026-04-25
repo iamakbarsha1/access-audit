@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Check, X } from "lucide-react";
 import { useSession } from "@/lib/auth-client";
 import { trpc } from "@/trpc/client";
-import { PLANS, type PlanKey } from "@access-audit/db";
+import { PLANS, type PlanKey } from "@access-audit/db/plans";
 import { toast } from "sonner";
 import { useState } from "react";
 

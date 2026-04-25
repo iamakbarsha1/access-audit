@@ -17,7 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { BillingTab } from "@/components/billing/billing-tab";
-import { canUseWhiteLabel } from "@access-audit/db";
+import { canUseWhiteLabel } from "@access-audit/db/plans";
 
 export default function SettingsPage() {
   const orgQuery = trpc.organization.getOrg.useQuery();
