@@ -21,34 +21,20 @@ function isPublicPath(pathname: string): boolean {
   );
 }
 
+const BASE_DOMAIN = process.env.BASE_DOMAIN; // e.g. "accessaudit.com"
+
 function getSubdomain(host: string): string | null {
-  // Remove port if present
+  if (!BASE_DOMAIN) return null;
+
   const hostname = host.split(":")[0] ?? host;
 
-  // In development, no subdomain detection
-  if (hostname === "localhost" || hostname === "127.0.0.1") {
+  if (!hostname.endsWith(`.${BASE_DOMAIN}`)) {
     return null;
   }
 
-  // Ignore Vercel preview/deployment URLs
-  if (hostname.endsWith(".vercel.app")) {
-    return null;
-  }
+  const subdomain = hostname.slice(0, -(BASE_DOMAIN.length + 1));
 
-  // Expected format: {slug}.accessaudit.com
-  // Split and check we have at least 3 parts (slug + accessaudit + com)
-  const parts = hostname.split(".");
-  if (parts.length < 3) {
-    return null; // bare domain like accessaudit.com
-  }
-
-  const subdomain = parts[0] ?? null;
-  if (!subdomain) {
-    return null;
-  }
-
-  // Ignore www — treat as main domain
-  if (subdomain === "www") {
+  if (!subdomain || subdomain === "www") {
     return null;
   }
 
