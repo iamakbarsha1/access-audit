@@ -15,7 +15,7 @@
 | Scanner Hosting | Railway | $5-20/mo, handles Puppeteer/headless Chrome well |
 | Billing | Dodo Payments (MoR) | Indian founder friendly, handles global tax, FIRA/eBRC |
 | Email | Resend | Free 3k emails/mo |
-| White-label | Subdomain routing in Next.js | agency-name.accessaudit.com |
+| White-label | Subdomain routing in Next.js (env-driven via `BASE_DOMAIN`) | Disabled until custom domain is configured |
 
 ## Project Structure
 - **Monorepo**: Turborepo + pnpm
