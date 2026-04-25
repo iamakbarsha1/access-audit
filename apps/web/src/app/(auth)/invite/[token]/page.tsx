@@ -34,7 +34,7 @@ export default function InviteAcceptPage() {
     }
 
     toast.success("Invitation accepted!");
-    router.push("/");
+    router.push("/dashboard");
   }
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function InviteAcceptPage() {
         </CardHeader>
         <CardContent>
           <Button asChild>
-            <Link href="/">Go to Dashboard</Link>
+            <Link href="/dashboard">Go to Dashboard</Link>
           </Button>
         </CardContent>
       </Card>
