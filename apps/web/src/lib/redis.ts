@@ -1,11 +1,14 @@
 import Redis from "ioredis";
 
-const getRedisUrl = () => {
-  const url = process.env.UPSTASH_REDIS_URL;
-  if (!url) throw new Error("UPSTASH_REDIS_URL is not set");
-  return url;
-};
+let _redis: Redis | null = null;
 
-export const redis = new Redis(getRedisUrl(), {
-  maxRetriesPerRequest: null,
+export const redis = new Proxy({} as Redis, {
+  get(_target, prop) {
+    if (!_redis) {
+      const url = process.env.UPSTASH_REDIS_URL;
+      if (!url) throw new Error("UPSTASH_REDIS_URL is not set");
+      _redis = new Redis(url, { maxRetriesPerRequest: null });
+    }
+    return (_redis as Record<string | symbol, unknown>)[prop];
+  },
 });
