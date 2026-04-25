@@ -30,6 +30,11 @@ function getSubdomain(host: string): string | null {
     return null;
   }
 
+  // Ignore Vercel preview/deployment URLs
+  if (hostname.endsWith(".vercel.app")) {
+    return null;
+  }
+
   // Expected format: {slug}.accessaudit.com
   // Split and check we have at least 3 parts (slug + accessaudit + com)
   const parts = hostname.split(".");
