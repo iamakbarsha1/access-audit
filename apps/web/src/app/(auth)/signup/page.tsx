@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "@/lib/auth-client";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -43,28 +42,8 @@ export default function SignupPage() {
       return;
     }
 
-    // 2. Create organization
-    const orgSlug = orgName
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-
-    const orgResult = await authClient.organization.create({
-      name: orgName,
-      slug: orgSlug,
-    });
-
-    if (orgResult.error) {
-      toast.error("Account created but failed to create organization. Please try again from the dashboard.");
-      setLoading(false);
-      router.push("/verify-email");
-      return;
-    }
-
-    // 3. Set as active organization
-    await authClient.organization.setActive({
-      organizationId: orgResult.data.id,
-    });
+    // 2. Store org name for creation after email verification
+    localStorage.setItem("pendingOrgName", orgName);
 
     setLoading(false);
     router.push("/verify-email");
