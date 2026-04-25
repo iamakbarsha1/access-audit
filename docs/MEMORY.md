@@ -17,6 +17,11 @@ ADA Accessibility Compliance SaaS for agencies/SMBs. Scan websites for WCAG viol
 ## Workflow Rules
 - **Keep all copies in sync**: When changing anything, ALWAYS update ALL places where that content exists (memory files, project docs/, code, configs). Never update one and leave the other stale.
 
+## Deployment Notes
+- **No custom domain yet** — using Vercel's free domain
+- **White-label subdomain routing** is env-driven via `BASE_DOMAIN` env var. Currently disabled. Set `BASE_DOMAIN=accessaudit.com` when custom domain is ready.
+- **Resend email**: Currently using sandbox sender (`onboarding@resend.dev`) which can ONLY deliver to the Resend account owner's email. Once a custom domain is available, verify it in Resend and update `from` address in `apps/web/src/lib/auth.ts` and `apps/web/src/lib/billing/emails.ts`.
+
 ## Critical Reminders
 - **MVP uses Option A** (axe-core + Puppeteer, Claude only for fix suggestions) ~$10-35/mo
 - **Post-MRR switch to Option B** (Claude API heavy analysis) to become market leader

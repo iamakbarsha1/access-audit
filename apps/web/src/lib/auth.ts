@@ -50,23 +50,33 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     async sendVerificationEmail({ user, url }) {
       if (!resend) {
-        console.log(`[DEV] Verification email for ${user.email}: ${url}`);
+        console.warn(`[AUTH] RESEND_API_KEY not set — verification email NOT sent for ${user.email}`);
+        console.log(`[AUTH] Verification URL: ${url}`);
         return;
       }
-      await resend.emails.send({
-        from: "AccessAudit <onboarding@resend.dev>",
-        to: user.email,
-        subject: "Verify your AccessAudit account",
-        html: `
-          <h2>Welcome to AccessAudit!</h2>
-          <p>Hi ${user.name},</p>
-          <p>Please verify your email address by clicking the link below:</p>
-          <a href="${url}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:white;text-decoration:none;border-radius:6px;">
-            Verify Email
-          </a>
-          <p>If you didn't create an account, you can safely ignore this email.</p>
-        `,
-      });
+      try {
+        const result = await resend.emails.send({
+          from: "AccessAudit <onboarding@resend.dev>",
+          to: user.email,
+          subject: "Verify your AccessAudit account",
+          html: `
+            <h2>Welcome to AccessAudit!</h2>
+            <p>Hi ${user.name},</p>
+            <p>Please verify your email address by clicking the link below:</p>
+            <a href="${url}" style="display:inline-block;padding:12px 24px;background:#6366f1;color:white;text-decoration:none;border-radius:6px;">
+              Verify Email
+            </a>
+            <p>If you didn't create an account, you can safely ignore this email.</p>
+          `,
+        });
+        if (result.error) {
+          console.error(`[AUTH] Resend API error for ${user.email}:`, result.error);
+        } else {
+          console.log(`[AUTH] Verification email sent to ${user.email}, id: ${result.data?.id}`);
+        }
+      } catch (err) {
+        console.error(`[AUTH] Failed to send verification email to ${user.email}:`, err);
+      }
     },
   },
 
