@@ -11,7 +11,7 @@ Each phase gets its own: brainstorm → spec → plan → build cycle.
 | 5 | Billing (Dodo Payments — checkout, webhooks, plan enforcement) | Complete | Gate revenue — needed before launch but not before dev |
 | 6 | Client deliverables (PDF reports, badges, shared views, VPAT) | Complete | Agency selling tool — needed for launch |
 | 7 | White-label subdomain routing | Complete | Agency tier feature |
-| 8 | Landing page + launch prep | Not Started | Last — ship when product works |
+| 8 | Landing page + launch prep | Complete | Last — ship when product works |
 
 ## Phase Dependencies
 ```
