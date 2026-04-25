@@ -69,9 +69,6 @@ export async function middleware(request: NextRequest) {
       const data = await res.json();
 
       if (!data.valid) {
-        // Invalid subdomain — redirect to main site
-        const mainUrl = new URL("/", request.url);
-        mainUrl.hostname = request.nextUrl.hostname.replace(`${subdomain}.`, "");
         return NextResponse.redirect("https://accessaudit.com");
       }
     } catch {
