@@ -7,10 +7,12 @@
     "lint": "turbo lint",
     "db:generate": "turbo db:generate",
     "db:migrate": "turbo db:migrate",
-    "db:push": "turbo db:push"
+    "db:push": "turbo db:push",
+    "test": "turbo test"
   },
   "devDependencies": {
-    "turbo": "^2"
+    "turbo": "^2",
+    "vitest": "^4.1.5"
   },
   "packageManager": "pnpm@9.15.4"
 }
