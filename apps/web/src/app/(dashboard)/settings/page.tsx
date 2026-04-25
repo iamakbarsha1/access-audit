@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import { BillingTab } from "@/components/billing/billing-tab";
+import { canUseWhiteLabel } from "@access-audit/db";
 
 export default function SettingsPage() {
   const orgQuery = trpc.organization.getOrg.useQuery();
@@ -105,6 +106,57 @@ export default function SettingsPage() {
                 <span className="text-sm text-muted-foreground">Plan</span>
                 <Badge>{orgQuery.data?.settings?.plan ?? "trial"}</Badge>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>White-Label Subdomain</CardTitle>
+              <CardDescription>
+                Serve branded client reports under your own subdomain.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {orgQuery.data?.settings?.plan &&
+              canUseWhiteLabel(orgQuery.data.settings.plan) ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">
+                      Your subdomain:
+                    </span>
+                    <code className="rounded bg-muted px-2 py-1 text-sm font-medium">
+                      {orgQuery.data?.organization?.slug}.accessaudit.com
+                    </code>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          `https://${orgQuery.data?.organization?.slug}.accessaudit.com`
+                        );
+                        toast.success("Subdomain URL copied!");
+                      }}
+                    >
+                      Copy
+                    </Button>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Share links created for your sites will automatically use
+                    this subdomain. Your clients will see your branding instead
+                    of AccessAudit.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">
+                    Upgrade to Agency or Pro to serve branded reports under your
+                    own subdomain.
+                  </p>
+                  <Button variant="outline" size="sm" asChild>
+                    <a href="/pricing">View Plans</a>
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
