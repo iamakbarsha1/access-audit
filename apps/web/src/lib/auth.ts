@@ -50,9 +50,11 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     async sendVerificationEmail({ user, url }) {
+      if (process.env.NODE_ENV === "development") {
+        console.log(`[AUTH] Verification URL for ${user.email}: ${url}`);
+      }
       if (!resend) {
         console.warn(`[AUTH] RESEND_API_KEY not set — verification email NOT sent for ${user.email}`);
-        console.log(`[AUTH] Verification URL: ${url}`);
         return;
       }
       try {
