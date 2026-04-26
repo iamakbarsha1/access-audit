@@ -1,7 +1,8 @@
-import { put } from "@vercel/blob";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { writeFile, mkdir } from "fs/promises";
+import { join } from "path";
 
 export async function POST(request: Request) {
   const session = await auth.api.getSession({
@@ -27,9 +28,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "File must be under 2MB" }, { status: 400 });
   }
 
-  const blob = await put(`logos/${session.user.id}-${Date.now()}`, file, {
-    access: "public",
-  });
+  // Use Vercel Blob in production, local filesystem in development
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const { put } = await import("@vercel/blob");
+    const blob = await put(`logos/${session.user.id}-${Date.now()}`, file, {
+      access: "public",
+    });
+    return NextResponse.json({ url: blob.url });
+  }
 
-  return NextResponse.json({ url: blob.url });
+  // Local dev: save to public/uploads/
+  const ext = file.name.split(".").pop() || "png";
+  const filename = `${session.user.id}-${Date.now()}.${ext}`;
+  const uploadDir = join(process.cwd(), "public", "uploads");
+  await mkdir(uploadDir, { recursive: true });
+  const buffer = Buffer.from(await file.arrayBuffer());
+  await writeFile(join(uploadDir, filename), buffer);
+
+  return NextResponse.json({ url: `/uploads/${filename}` });
 }
