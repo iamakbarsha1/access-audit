@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signUp, authClient } from "@/lib/auth-client";
+import { signUp, signIn, authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,11 +42,24 @@ export default function SignupPage() {
       return;
     }
 
-    // 2. Store org name and email for use after email verification
+    // 2. Check if user already exists and is verified by attempting sign-in.
+    // Better Auth returns 200 for duplicate emails without setting error,
+    // so we detect existing verified users by trying to sign in.
+    const { error: signInError } = await signIn.email({ email, password });
+    if (!signInError) {
+      // Sign-in succeeded → user already existed and is verified
+      toast.info("An account with this email already exists. Signing you in.");
+      localStorage.setItem("pendingOrgName", orgName);
+      setLoading(false);
+      router.push("/onboarding");
+      return;
+    }
+
+    // 3. Store org name and email for use after email verification
     localStorage.setItem("pendingOrgName", orgName);
     localStorage.setItem("pendingEmail", email);
 
-    // 3. Explicitly send verification email (handles both new and existing unverified users)
+    // 4. Explicitly send verification email (handles both new and existing unverified users)
     await authClient.sendVerificationEmail({
       email,
       callbackURL: "/onboarding",
