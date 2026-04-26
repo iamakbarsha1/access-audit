@@ -322,7 +322,7 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
-                      marginBottom: 2,
+                      marginBottom: 7,
                     }}
                   >
                     <Text style={[styles.badge, severityColor(v.impact)]}>
@@ -333,7 +333,7 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
                     </Text>
                   </View>
                   {v.wcagTags.length > 0 && (
-                    <Text style={[styles.muted, { marginBottom: 2 }]}>
+                    <Text style={[styles.muted, { marginBottom: 7 }]}>
                       WCAG: {v.wcagTags.join(", ")}
                     </Text>
                   )}
