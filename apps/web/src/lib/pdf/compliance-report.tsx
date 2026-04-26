@@ -9,27 +9,72 @@ import {
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 10, fontFamily: "Helvetica" },
-  coverPage: { padding: 40, justifyContent: "center", alignItems: "center", height: "100%" },
+  coverPage: {
+    padding: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+  },
   title: { fontSize: 24, fontFamily: "Helvetica-Bold", marginBottom: 12 },
   subtitle: { fontSize: 14, color: "#6b7280", marginBottom: 8 },
-  sectionTitle: { fontSize: 16, fontFamily: "Helvetica-Bold", marginBottom: 8, marginTop: 20 },
-  scoreCircle: { fontSize: 48, fontFamily: "Helvetica-Bold", marginVertical: 20 },
-  row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#e5e7eb", paddingVertical: 4 },
-  headerRow: { flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#374151", paddingVertical: 6, backgroundColor: "#f9fafb" },
+  sectionTitle: {
+    fontSize: 16,
+    fontFamily: "Helvetica-Bold",
+    marginBottom: 8,
+    marginTop: 20,
+  },
+  scoreCircle: {
+    fontSize: 48,
+    fontFamily: "Helvetica-Bold",
+    marginVertical: 20,
+  },
+  row: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e5e7eb",
+    paddingVertical: 4,
+  },
+  headerRow: {
+    flexDirection: "row",
+    borderBottomWidth: 2,
+    borderBottomColor: "#374151",
+    paddingVertical: 6,
+    backgroundColor: "#f9fafb",
+  },
   cell: { flex: 1, paddingHorizontal: 4 },
   cellSmall: { width: 60, paddingHorizontal: 4 },
   cellWide: { flex: 2, paddingHorizontal: 4 },
   bold: { fontFamily: "Helvetica-Bold" },
   muted: { color: "#6b7280" },
-  badge: { paddingHorizontal: 6, paddingVertical: 2, borderRadius: 4, fontSize: 9 },
+  badge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    fontSize: 9,
+  },
   badgeCritical: { backgroundColor: "#fef2f2", color: "#991b1b" },
   badgeSerious: { backgroundColor: "#fff7ed", color: "#9a3412" },
   badgeModerate: { backgroundColor: "#fefce8", color: "#854d0e" },
   badgeMinor: { backgroundColor: "#f0fdf4", color: "#166534" },
   accentBar: { height: 4, marginBottom: 20 },
   logo: { width: 120, height: 40, marginBottom: 16, objectFit: "contain" },
-  footer: { position: "absolute", bottom: 20, left: 40, right: 40, textAlign: "center", fontSize: 8, color: "#9ca3af" },
-  codeBlock: { backgroundColor: "#f3f4f6", padding: 8, borderRadius: 4, fontFamily: "Courier", fontSize: 8, marginTop: 4 },
+  footer: {
+    position: "absolute",
+    bottom: 20,
+    left: 40,
+    right: 40,
+    textAlign: "center",
+    fontSize: 8,
+    color: "#9ca3af",
+  },
+  codeBlock: {
+    backgroundColor: "#f3f4f6",
+    padding: 8,
+    borderRadius: 4,
+    fontFamily: "Courier",
+    fontSize: 8,
+    marginTop: 4,
+  },
   comparisonPositive: { color: "#16a34a" },
   comparisonNegative: { color: "#dc2626" },
 });
@@ -44,16 +89,31 @@ export interface ComplianceReportData {
   complianceScore: number;
   pagesScanned: number;
   durationMs: number;
-  violationCounts: { critical: number; serious: number; moderate: number; minor: number };
+  violationCounts: {
+    critical: number;
+    serious: number;
+    moderate: number;
+    minor: number;
+  };
   previousScan: {
     complianceScore: number;
     scanDate: string;
-    violationCounts: { critical: number; serious: number; moderate: number; minor: number };
+    violationCounts: {
+      critical: number;
+      serious: number;
+      moderate: number;
+      minor: number;
+    };
   } | null;
   pages: Array<{
     url: string;
     complianceScore: number | null;
-    violationCounts: { critical: number; serious: number; moderate: number; minor: number } | null;
+    violationCounts: {
+      critical: number;
+      serious: number;
+      moderate: number;
+      minor: number;
+    } | null;
   }>;
   violations: Array<{
     ruleId: string;
@@ -83,11 +143,16 @@ function formatDuration(ms: number): string {
 
 function severityColor(impact: string) {
   switch (impact) {
-    case "critical": return styles.badgeCritical;
-    case "serious": return styles.badgeSerious;
-    case "moderate": return styles.badgeModerate;
-    case "minor": return styles.badgeMinor;
-    default: return styles.badgeMinor;
+    case "critical":
+      return styles.badgeCritical;
+    case "serious":
+      return styles.badgeSerious;
+    case "moderate":
+      return styles.badgeModerate;
+    case "minor":
+      return styles.badgeMinor;
+    default:
+      return styles.badgeMinor;
   }
 }
 
@@ -106,22 +171,29 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
     <Document>
       {/* Cover Page */}
       <Page size="A4" style={styles.coverPage}>
-        <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
+        <View
+          style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+        />
         {data.logoUrl && <Image src={data.logoUrl} style={styles.logo} />}
         <Text style={styles.title}>Accessibility Compliance Report</Text>
         <Text style={styles.subtitle}>{data.siteUrl}</Text>
         <Text style={styles.scoreCircle}>{data.complianceScore}%</Text>
         <Text style={styles.subtitle}>Compliance Score</Text>
         <Text style={styles.muted}>Scanned on {data.scanDate}</Text>
-        <Text style={styles.muted}>{data.pagesScanned} pages scanned in {formatDuration(data.durationMs)}</Text>
+        <Text style={styles.muted}>
+          {data.pagesScanned} pages scanned in {formatDuration(data.durationMs)}
+        </Text>
         <Text style={[styles.footer]}>
-          Generated by AccessAudit{data.orgName !== "AccessAudit" ? ` for ${data.orgName}` : ""}
+          Generated by AccessAudit
+          {data.orgName !== "AccessAudit" ? ` for ${data.orgName}` : ""}
         </Text>
       </Page>
 
       {/* Executive Summary */}
       <Page size="A4" style={styles.page}>
-        <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
+        <View
+          style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+        />
         <Text style={styles.sectionTitle}>Executive Summary</Text>
         <View style={styles.row}>
           <Text style={[styles.cell, styles.bold]}>Overall Score</Text>
@@ -158,7 +230,10 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
           <View>
             <View style={styles.row}>
               <Text style={[styles.cell, styles.bold]}>Previous Score</Text>
-              <Text style={styles.cell}>{data.previousScan.complianceScore}% ({data.previousScan.scanDate})</Text>
+              <Text style={styles.cell}>
+                {data.previousScan.complianceScore}% (
+                {data.previousScan.scanDate})
+              </Text>
             </View>
             <View style={styles.row}>
               <Text style={[styles.cell, styles.bold]}>Current Score</Text>
@@ -180,7 +255,9 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
             </View>
           </View>
         ) : (
-          <Text style={styles.muted}>First scan — no prior data for comparison.</Text>
+          <Text style={styles.muted}>
+            First scan — no prior data for comparison.
+          </Text>
         )}
 
         <Text style={[styles.footer]}>
@@ -190,7 +267,9 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
 
       {/* Page-by-Page Breakdown */}
       <Page size="A4" style={styles.page}>
-        <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
+        <View
+          style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+        />
         <Text style={styles.sectionTitle}>Page-by-Page Breakdown</Text>
         <View style={styles.headerRow}>
           <Text style={[styles.cellWide, styles.bold]}>URL</Text>
@@ -204,65 +283,94 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
           <View key={i} style={styles.row}>
             <Text style={styles.cellWide}>{page.url}</Text>
             <Text style={styles.cellSmall}>{page.complianceScore ?? "—"}%</Text>
-            <Text style={styles.cellSmall}>{page.violationCounts?.critical ?? 0}</Text>
-            <Text style={styles.cellSmall}>{page.violationCounts?.serious ?? 0}</Text>
-            <Text style={styles.cellSmall}>{page.violationCounts?.moderate ?? 0}</Text>
-            <Text style={styles.cellSmall}>{page.violationCounts?.minor ?? 0}</Text>
+            <Text style={styles.cellSmall}>
+              {page.violationCounts?.critical ?? 0}
+            </Text>
+            <Text style={styles.cellSmall}>
+              {page.violationCounts?.serious ?? 0}
+            </Text>
+            <Text style={styles.cellSmall}>
+              {page.violationCounts?.moderate ?? 0}
+            </Text>
+            <Text style={styles.cellSmall}>
+              {page.violationCounts?.minor ?? 0}
+            </Text>
           </View>
         ))}
-        <Text style={[styles.footer]}>Generated by AccessAudit on {data.scanDate}</Text>
+        <Text style={[styles.footer]}>
+          Generated by AccessAudit on {data.scanDate}
+        </Text>
       </Page>
 
       {/* Violations by Severity */}
-      {(["critical", "serious", "moderate", "minor"] as const).map((severity) => {
-        const filtered = data.violations.filter((v) => v.impact === severity);
-        if (filtered.length === 0) return null;
-        return (
-          <Page key={severity} size="A4" style={styles.page}>
-            <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
-            <Text style={styles.sectionTitle}>
-              {severity.charAt(0).toUpperCase() + severity.slice(1)} Violations ({filtered.length})
-            </Text>
-            {filtered.map((v, i) => (
-              <View key={i} style={{ marginBottom: 12 }}>
-                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 2 }}>
-                  <Text style={[styles.badge, severityColor(v.impact)]}>{v.impact}</Text>
-                  <Text style={[styles.bold, { marginLeft: 6 }]}>{v.ruleId}</Text>
+      {(["critical", "serious", "moderate", "minor"] as const).map(
+        (severity) => {
+          const filtered = data.violations.filter((v) => v.impact === severity);
+          if (filtered.length === 0) return null;
+          return (
+            <Page key={severity} size="A4" style={styles.page}>
+              <View
+                style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+              />
+              <Text style={styles.sectionTitle}>
+                {severity.charAt(0).toUpperCase() + severity.slice(1)}{" "}
+                Violations ({filtered.length})
+              </Text>
+              {filtered.map((v, i) => (
+                <View key={i} style={{ marginBottom: 12 }}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      marginBottom: 2,
+                    }}
+                  >
+                    <Text style={[styles.badge, severityColor(v.impact)]}>
+                      {v.impact}
+                    </Text>
+                    <Text style={[styles.bold, { marginLeft: 6 }]}>
+                      {v.ruleId}
+                    </Text>
+                  </View>
                   {v.wcagTags.length > 0 && (
-                    <Text style={[styles.muted, { marginLeft: 6 }]}>
+                    <Text style={[styles.muted, { marginBottom: 2 }]}>
                       WCAG: {v.wcagTags.join(", ")}
                     </Text>
                   )}
+                  <Text style={styles.muted}>Page: {v.pageUrl}</Text>
+                  <Text style={{ marginTop: 2 }}>{v.description}</Text>
+                  {v.htmlSnippet && (
+                    <View style={styles.codeBlock}>
+                      <Text>{v.htmlSnippet}</Text>
+                    </View>
+                  )}
+                  {v.aiExplanation && (
+                    <View style={{ marginTop: 4 }}>
+                      <Text style={styles.bold}>Explanation:</Text>
+                      <Text>{v.aiExplanation}</Text>
+                    </View>
+                  )}
+                  {v.aiFixCode && (
+                    <View style={styles.codeBlock}>
+                      <Text style={styles.bold}>Suggested Fix:</Text>
+                      <Text>{v.aiFixCode}</Text>
+                    </View>
+                  )}
                 </View>
-                <Text style={styles.muted}>Page: {v.pageUrl}</Text>
-                <Text style={{ marginTop: 2 }}>{v.description}</Text>
-                {v.htmlSnippet && (
-                  <View style={styles.codeBlock}>
-                    <Text>{v.htmlSnippet}</Text>
-                  </View>
-                )}
-                {v.aiExplanation && (
-                  <View style={{ marginTop: 4 }}>
-                    <Text style={styles.bold}>Explanation:</Text>
-                    <Text>{v.aiExplanation}</Text>
-                  </View>
-                )}
-                {v.aiFixCode && (
-                  <View style={styles.codeBlock}>
-                    <Text style={styles.bold}>Suggested Fix:</Text>
-                    <Text>{v.aiFixCode}</Text>
-                  </View>
-                )}
-              </View>
-            ))}
-            <Text style={[styles.footer]}>Generated by AccessAudit on {data.scanDate}</Text>
-          </Page>
-        );
-      })}
+              ))}
+              <Text style={[styles.footer]}>
+                Generated by AccessAudit on {data.scanDate}
+              </Text>
+            </Page>
+          );
+        },
+      )}
 
       {/* WCAG Criteria Mapping */}
       <Page size="A4" style={styles.page}>
-        <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
+        <View
+          style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+        />
         <Text style={styles.sectionTitle}>WCAG 2.1 AA Criteria Mapping</Text>
         <View style={styles.headerRow}>
           <Text style={[styles.cellSmall, styles.bold]}>Criterion</Text>
@@ -278,57 +386,75 @@ export function ComplianceReport({ data }: { data: ComplianceReportData }) {
             <Text
               style={[
                 styles.cellSmall,
-                c.status === "pass" ? styles.comparisonPositive : styles.comparisonNegative,
+                c.status === "pass"
+                  ? styles.comparisonPositive
+                  : styles.comparisonNegative,
               ]}
             >
               {c.status === "pass" ? "Pass" : `Fail (${c.violationCount})`}
             </Text>
           </View>
         ))}
-        <Text style={[styles.footer]}>Generated by AccessAudit on {data.scanDate}</Text>
+        <Text style={[styles.footer]}>
+          Generated by AccessAudit on {data.scanDate}
+        </Text>
       </Page>
 
       {/* Glossary */}
       <Page size="A4" style={styles.page}>
-        <View style={[styles.accentBar, { backgroundColor: data.brandColor }]} />
+        <View
+          style={[styles.accentBar, { backgroundColor: data.brandColor }]}
+        />
         <Text style={styles.sectionTitle}>What These Scores Mean</Text>
 
         <Text style={[styles.bold, { marginTop: 8 }]}>Compliance Score</Text>
         <Text>
-          A percentage reflecting how many accessibility checks passed out of the total checks performed.
-          100% means all automated checks passed. Scores above 90% indicate strong accessibility.
+          A percentage reflecting how many accessibility checks passed out of
+          the total checks performed. 100% means all automated checks passed.
+          Scores above 90% indicate strong accessibility.
         </Text>
 
         <Text style={[styles.bold, { marginTop: 12 }]}>WCAG 2.1 AA</Text>
         <Text>
-          The Web Content Accessibility Guidelines (WCAG) 2.1 Level AA is the internationally accepted
-          standard for web accessibility. It covers text alternatives, keyboard navigation, color contrast,
-          form labels, and more. Level AA conformance is typically required for legal compliance.
+          The Web Content Accessibility Guidelines (WCAG) 2.1 Level AA is the
+          internationally accepted standard for web accessibility. It covers
+          text alternatives, keyboard navigation, color contrast, form labels,
+          and more. Level AA conformance is typically required for legal
+          compliance.
         </Text>
 
         <Text style={[styles.bold, { marginTop: 12 }]}>Severity Levels</Text>
         <Text style={{ marginTop: 4 }}>
-          Critical — Blocks access entirely for some users (e.g., missing alt text on navigation images).
+          Critical — Blocks access entirely for some users (e.g., missing alt
+          text on navigation images).
         </Text>
         <Text style={{ marginTop: 2 }}>
-          Serious — Significant barriers that make content very difficult to use (e.g., low contrast text).
+          Serious — Significant barriers that make content very difficult to use
+          (e.g., low contrast text).
         </Text>
         <Text style={{ marginTop: 2 }}>
-          Moderate — Creates difficulty but content is still usable (e.g., missing form labels).
+          Moderate — Creates difficulty but content is still usable (e.g.,
+          missing form labels).
         </Text>
         <Text style={{ marginTop: 2 }}>
-          Minor — Small issues that cause slight inconvenience (e.g., redundant alt text).
+          Minor — Small issues that cause slight inconvenience (e.g., redundant
+          alt text).
         </Text>
 
-        <Text style={[styles.bold, { marginTop: 12 }]}>Automated vs Manual Testing</Text>
+        <Text style={[styles.bold, { marginTop: 12 }]}>
+          Automated vs Manual Testing
+        </Text>
         <Text>
-          This report uses automated scanning (axe-core engine) which reliably detects approximately
-          57 of 78 WCAG 2.1 AA criteria. Some criteria require manual testing (e.g., video captions,
-          cognitive load assessment). A comprehensive accessibility audit combines both automated and
-          manual review.
+          This report uses automated scanning (axe-core engine) which reliably
+          detects approximately 57 of 78 WCAG 2.1 AA criteria. Some criteria
+          require manual testing (e.g., video captions, cognitive load
+          assessment). A comprehensive accessibility audit combines both
+          automated and manual review.
         </Text>
 
-        <Text style={[styles.footer]}>Generated by AccessAudit on {data.scanDate}</Text>
+        <Text style={[styles.footer]}>
+          Generated by AccessAudit on {data.scanDate}
+        </Text>
       </Page>
     </Document>
   );
