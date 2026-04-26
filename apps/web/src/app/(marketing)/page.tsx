@@ -135,13 +135,13 @@ export default function HomePage() {
       {/* ===== HERO ===== */}
       <section className="relative overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/50 to-purple-50/50" />
-        <div className="absolute top-0 right-0 -z-0 h-[500px] w-[500px] rounded-full bg-purple-100/40 blur-3xl" />
-        <div className="absolute bottom-0 left-0 -z-0 h-[400px] w-[400px] rounded-full bg-blue-100/40 blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-teal-50/50 to-emerald-50/50" />
+        <div className="absolute top-0 right-0 -z-0 h-[500px] w-[500px] rounded-full bg-teal-100/40 blur-3xl" />
+        <div className="absolute bottom-0 left-0 -z-0 h-[400px] w-[400px] rounded-full bg-emerald-100/40 blur-3xl" />
 
         <div className="relative mx-auto max-w-6xl px-6 py-24 sm:py-32 lg:py-40">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-sm font-medium text-purple-700">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-teal-50 px-4 py-1.5 text-sm font-medium text-teal-700">
               <Sparkles className="h-3.5 w-3.5" />
               AI-Powered Accessibility Compliance
             </div>
@@ -149,7 +149,7 @@ export default function HomePage() {
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
               Your clients&apos; websites.
               <br />
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                 Fully compliant.
               </span>
             </h1>
@@ -163,7 +163,7 @@ export default function HomePage() {
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition-all hover:shadow-xl hover:shadow-purple-500/30 hover:opacity-95"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#004f32] px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-teal-900/25 transition-all hover:shadow-xl hover:shadow-teal-900/30 hover:opacity-95"
               >
                 Start Free Trial
                 <ArrowRight className="h-4 w-4" />
@@ -183,12 +183,12 @@ export default function HomePage() {
 
           {/* Dashboard preview mockup */}
           <div className="mx-auto mt-16 max-w-4xl">
-            <div className="rounded-xl border bg-white/80 p-2 shadow-2xl shadow-purple-500/10 backdrop-blur">
+            <div className="rounded-xl border bg-white/80 p-2 shadow-2xl shadow-teal-900/10 backdrop-blur">
               <div className="rounded-lg border bg-gradient-to-br from-slate-50 to-white p-6">
                 {/* Mock dashboard header */}
                 <div className="flex items-center justify-between border-b pb-4">
                   <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600" />
+                    <div className="h-8 w-8 rounded-lg bg-[#004f32]" />
                     <div>
                       <div className="h-3 w-32 rounded bg-slate-200" />
                       <div className="mt-1.5 h-2 w-20 rounded bg-slate-100" />
@@ -268,7 +268,7 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 sm:grid-cols-3">
           {STATS.map((stat) => (
             <div key={stat.value} className="text-center">
-              <div className="text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent sm:text-4xl">
+              <div className="text-3xl font-extrabold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent sm:text-4xl">
                 {stat.value}
               </div>
               <p className="mt-1 text-sm font-medium text-foreground">
@@ -288,7 +288,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Everything agencies need to{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                 deliver compliance
               </span>
             </h2>
@@ -302,9 +302,9 @@ export default function HomePage() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.title}
-                className="group rounded-xl border bg-white p-6 transition-all hover:border-purple-200 hover:shadow-lg hover:shadow-purple-500/5"
+                className="group rounded-xl border bg-white p-6 transition-all hover:border-teal-200 hover:shadow-lg hover:shadow-teal-900/5"
               >
-                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/10 to-purple-600/10 text-purple-600">
+                <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-teal-50 text-[#004f32]">
                   <feature.icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-semibold text-foreground">
@@ -322,13 +322,13 @@ export default function HomePage() {
       {/* ===== HOW IT WORKS ===== */}
       <section
         id="how-it-works"
-        className="scroll-mt-20 border-y bg-gradient-to-br from-slate-50 to-purple-50/30"
+        className="scroll-mt-20 border-y bg-gradient-to-br from-slate-50 to-teal-50/30"
       >
         <div className="mx-auto max-w-6xl px-6 py-20 sm:py-24">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Three steps to{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                 full compliance
               </span>
             </h2>
@@ -342,10 +342,10 @@ export default function HomePage() {
               <div key={step.number} className="relative">
                 {/* Connector line (desktop only) */}
                 {idx < STEPS.length - 1 && (
-                  <div className="absolute top-12 left-full hidden h-0.5 w-8 bg-gradient-to-r from-purple-300 to-transparent lg:block" />
+                  <div className="absolute top-12 left-full hidden h-0.5 w-8 bg-gradient-to-r from-teal-300 to-transparent lg:block" />
                 )}
                 <div className="rounded-xl border bg-white p-6 shadow-sm">
-                  <div className="mb-4 text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                  <div className="mb-4 text-3xl font-extrabold bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                     {step.number}
                   </div>
                   <h3 className="text-lg font-semibold text-foreground">
@@ -367,7 +367,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Simple,{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                 transparent pricing
               </span>
             </h2>
@@ -384,13 +384,13 @@ export default function HomePage() {
       {/* ===== FAQ ===== */}
       <section
         id="faq"
-        className="scroll-mt-20 border-y bg-gradient-to-br from-slate-50 to-blue-50/30"
+        className="scroll-mt-20 border-y bg-gradient-to-br from-slate-50 to-teal-50/30"
       >
         <div className="mx-auto max-w-3xl px-6 py-20 sm:py-24">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Frequently asked{" "}
-              <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                 questions
               </span>
             </h2>
@@ -406,20 +406,20 @@ export default function HomePage() {
 
       {/* ===== FINAL CTA ===== */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-700" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[#004f32]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.1),transparent_50%)]" />
 
         <div className="relative mx-auto max-w-4xl px-6 py-20 text-center sm:py-24">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Ready to make your clients&apos; sites compliant?
           </h2>
-          <p className="mt-4 text-lg text-blue-100">
+          <p className="mt-4 text-lg text-emerald-100">
             Start your free 7-day trial. No credit card required.
           </p>
           <div className="mt-8">
             <Link
               href="/signup"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-purple-700 shadow-lg transition-all hover:shadow-xl hover:bg-purple-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-[#004f32] shadow-lg transition-all hover:shadow-xl hover:bg-emerald-50"
             >
               Start Free Trial
               <ArrowRight className="h-4 w-4" />

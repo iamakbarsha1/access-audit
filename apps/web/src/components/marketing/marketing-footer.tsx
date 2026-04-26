@@ -18,7 +18,7 @@ export function MarketingFooter() {
         {/* Brand */}
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004f32] text-white text-sm font-bold">
               A
             </div>
             <span className="text-lg font-bold text-foreground">

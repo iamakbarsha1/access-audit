@@ -35,7 +35,7 @@ export function MarketingNav() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#004f32] text-white text-sm font-bold">
             A
           </div>
           <span className="text-lg font-bold text-foreground">
@@ -66,7 +66,7 @@ export function MarketingNav() {
           </Link>
           <Link
             href="/signup"
-            className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+            className="rounded-lg bg-[#004f32] px-4 py-2 text-sm font-semibold text-white transition-opacity hover:opacity-90"
           >
             Start Free Trial
           </Link>
@@ -105,7 +105,7 @@ export function MarketingNav() {
             </Link>
             <Link
               href="/signup"
-              className="rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 px-4 py-2 text-center text-sm font-semibold text-white"
+              className="rounded-lg bg-[#004f32] px-4 py-2 text-center text-sm font-semibold text-white"
             >
               Start Free Trial
             </Link>
