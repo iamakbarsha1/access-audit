@@ -4,28 +4,49 @@ import {
   Text,
   View,
   Image,
+  Font,
   StyleSheet,
 } from "@react-pdf/renderer";
 
+Font.register({
+  family: "Inter",
+  fonts: [
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf",
+      fontWeight: 400,
+    },
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf",
+      fontWeight: 600,
+    },
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf",
+      fontWeight: 700,
+    },
+  ],
+});
+
 const styles = StyleSheet.create({
-  page: { padding: 40, fontSize: 10, fontFamily: "Helvetica" },
+  page: { padding: 40, fontSize: 10, fontFamily: "Inter" },
   coverPage: {
     padding: 40,
     justifyContent: "center",
     alignItems: "center",
     height: "100%",
   },
-  title: { fontSize: 24, fontFamily: "Helvetica-Bold", marginBottom: 12 },
+  title: { fontSize: 24, fontFamily: "Inter", fontWeight: 700, marginBottom: 12 },
   subtitle: { fontSize: 14, color: "#6b7280", marginBottom: 8 },
   sectionTitle: {
     fontSize: 16,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: "Inter",
+    fontWeight: 700,
     marginBottom: 8,
     marginTop: 20,
   },
   scoreCircle: {
     fontSize: 48,
-    fontFamily: "Helvetica-Bold",
+    fontFamily: "Inter",
+    fontWeight: 700,
     marginVertical: 20,
   },
   row: {
@@ -44,7 +65,7 @@ const styles = StyleSheet.create({
   cell: { flex: 1, paddingHorizontal: 4 },
   cellSmall: { width: 60, paddingHorizontal: 4 },
   cellWide: { flex: 2, paddingHorizontal: 4 },
-  bold: { fontFamily: "Helvetica-Bold" },
+  bold: { fontFamily: "Inter", fontWeight: 600 },
   muted: { color: "#6b7280" },
   badge: {
     paddingHorizontal: 6,

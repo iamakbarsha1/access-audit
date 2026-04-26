@@ -3,24 +3,43 @@ import {
   Page,
   Text,
   View,
+  Font,
   StyleSheet,
 } from "@react-pdf/renderer";
 
+Font.register({
+  family: "Inter",
+  fonts: [
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf",
+      fontWeight: 400,
+    },
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuI6fMZhrib2Bg-4.ttf",
+      fontWeight: 600,
+    },
+    {
+      src: "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf",
+      fontWeight: 700,
+    },
+  ],
+});
+
 const styles = StyleSheet.create({
-  page: { padding: 40, fontSize: 10, fontFamily: "Helvetica" },
-  title: { fontSize: 20, fontFamily: "Helvetica-Bold", marginBottom: 4 },
+  page: { padding: 40, fontSize: 10, fontFamily: "Inter" },
+  title: { fontSize: 20, fontFamily: "Inter", fontWeight: 700, marginBottom: 4 },
   subtitle: { fontSize: 12, color: "#6b7280", marginBottom: 16 },
-  sectionTitle: { fontSize: 14, fontFamily: "Helvetica-Bold", marginBottom: 8, marginTop: 16 },
+  sectionTitle: { fontSize: 14, fontFamily: "Inter", fontWeight: 700, marginBottom: 8, marginTop: 16 },
   row: { flexDirection: "row", borderBottomWidth: 1, borderBottomColor: "#e5e7eb", paddingVertical: 4 },
   headerRow: { flexDirection: "row", borderBottomWidth: 2, borderBottomColor: "#374151", paddingVertical: 6, backgroundColor: "#f9fafb" },
   cellCriterion: { width: 60, paddingHorizontal: 4 },
   cellName: { flex: 2, paddingHorizontal: 4 },
   cellConformance: { flex: 1, paddingHorizontal: 4 },
   cellRemarks: { flex: 2, paddingHorizontal: 4 },
-  bold: { fontFamily: "Helvetica-Bold" },
+  bold: { fontFamily: "Inter", fontWeight: 600 },
   muted: { color: "#6b7280" },
   infoRow: { flexDirection: "row", marginBottom: 4 },
-  infoLabel: { width: 160, fontFamily: "Helvetica-Bold" },
+  infoLabel: { width: 160, fontFamily: "Inter", fontWeight: 600 },
   infoValue: { flex: 1 },
   footer: { position: "absolute", bottom: 20, left: 40, right: 40, textAlign: "center", fontSize: 8, color: "#9ca3af" },
 });
