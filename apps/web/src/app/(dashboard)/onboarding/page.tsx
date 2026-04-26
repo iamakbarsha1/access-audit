@@ -55,8 +55,10 @@ export default function OnboardingPage() {
       });
 
       localStorage.removeItem("pendingOrgName");
-      setOrgReady(true);
-      initSettings.mutate();
+
+      // Full reload busts the server-side cookie cache so tRPC sees the new activeOrganizationId
+      window.location.reload();
+      return;
     }
 
     ensureOrg();

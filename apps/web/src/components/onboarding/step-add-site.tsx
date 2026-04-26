@@ -27,13 +27,17 @@ export function StepAddSite({ onNext }: StepAddSiteProps) {
 
   async function handleAddSite(e: React.FormEvent) {
     e.preventDefault();
-    const result = await addSite.mutateAsync({
-      url,
-      name: name || new URL(url).hostname,
-    });
-    if (result) {
-      toast.success("Site added!");
-      onNext();
+    try {
+      const result = await addSite.mutateAsync({
+        url,
+        name: name || new URL(url).hostname,
+      });
+      if (result) {
+        toast.success("Site added!");
+        onNext();
+      }
+    } catch (err) {
+      toast.error("Failed to add site. Please try again.");
     }
   }
 

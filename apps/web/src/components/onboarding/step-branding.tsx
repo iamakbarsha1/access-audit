@@ -48,8 +48,12 @@ export function StepBranding({ onNext }: StepBrandingProps) {
   }
 
   async function handleNext() {
-    await updateSettings.mutateAsync({ brandColor });
-    onNext();
+    try {
+      await updateSettings.mutateAsync({ brandColor });
+      onNext();
+    } catch (err) {
+      toast.error("Failed to save brand settings. Please try again.");
+    }
   }
 
   return (
